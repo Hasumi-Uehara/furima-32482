@@ -30,7 +30,7 @@
 | prefecture_id            | integer    | null: false                    |
 | scheduled_delivery_id    | integer    | null: false                    |
 | price                    | integer    | null: false                    |
-| user                     | references | null: false, foreign_key: ture |
+| user                     | references | null: false, foreign_key: true |
 
 ### Itemsテーブルのアソシエーション
 
@@ -52,16 +52,16 @@
 
 ## Addresses テーブル
 
-| Column        | Type       | Options     |
-| ------------- | ---------- | ----------- |
-| postal_code   | string     | null: false |
-| prefecture_id | integer    | null: false |
-| city          | string     | null: false |
-| addresses     | string     | null: false |
-| building      | string     |             |
-| phone_number  | string     | null: false |
-| order         | references | null: false |
+| Column        | Type       | Options                        |
+| ------------- | ---------- | ------------------------------ |
+| postal_code   | string     | null: false                    |
+| prefecture_id | integer    | null: false                    |
+| city          | string     | null: false                    |
+| addresses     | string     | null: false                    |
+| building      | string     |                                |
+| phone_number  | string     | null: false                    |
+| order         | references | null: false, foreign_key: true |
 
-### Addressedテーブルのアソシエーション
+### Addressesテーブルのアソシエーション
 
 - belongs_to :order
