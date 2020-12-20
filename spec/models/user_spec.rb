@@ -10,15 +10,6 @@ RSpec.describe User, type: :model do
       it 'email、password、password_confirmationが存在すれば登録できる' do
         expect(@user).to be_valid
       end
-      it 'emailに@が存在すれば登録できる' do
-        @user.email = 'pop@pop'
-        expect(@user).to be_valid
-      end
-      it 'passwordが6文字以上であれば登録できる' do
-        @user.password = 'abc123'
-        @user.password_confirmation = 'abc123'
-        expect(@user).to be_valid
-      end
     end
 
     context '新規登録がうまくいかないとき' do
