@@ -12,12 +12,13 @@ class Item < ApplicationRecord
 
   with_options presence: true do
     validates :image
-    validates :name
-    validates :info
-    validates :price, format: { with: /\A[0-9]+\z/, message: 'is invalid. Input half-width characters.' }
+    validates :name, length: { maximum: 40 }
+    validates :info, length: { maximum: 1000 }
+    validates :price, format: { with: /\A[0-9]+\z/, message: 'is invalid. Input half-width characters.' },
+                      numericality: { greater_than_or_equal_to: 300, less_than_or_equal_to: 9_999_999 }
   end
 
   # 下記データの選択が「--」のときは保存できないようにする。
-  validates :category_id, :sales_status_id, :shopping_fee_status_id, :prefecture_id, :scheduled_delivery_id,
-            numericality: { other_than: 1 }
+  validates :category_id, :sales_status_id, :shopping_fee_status_id,
+            :prefecture_id, :scheduled_delivery_id, numericality: { other_than: 1 }
 end
