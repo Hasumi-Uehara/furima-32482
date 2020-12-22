@@ -48,42 +48,42 @@ RSpec.describe User, type: :model do
         expect(@user.errors.full_messages).to include("Password confirmation doesn't match Password")
       end
       it 'first_nameが全角日本語でないと登録できない' do
-        @user.first_name = "FURIMA"
+        @user.first_name = 'FURIMA'
         @user.valid?
-        expect(@user.errors.full_messages).to include("First name is invalid. Input full-width characters.")
+        expect(@user.errors.full_messages).to include('First name is invalid. Input full-width characters.')
       end
       it 'last_nameが全角日本語でないと登録できない' do
-        @user.last_name = "TAROU"
+        @user.last_name = 'TAROU'
         @user.valid?
-        expect(@user.errors.full_messages).to include("Last name is invalid. Input full-width characters.")
+        expect(@user.errors.full_messages).to include('Last name is invalid. Input full-width characters.')
       end
       it 'first_name_readingが全角カタカナでないと登録できない' do
-        @user.first_name_reading = "ﾌﾘﾏ"
+        @user.first_name_reading = 'ﾌﾘﾏ'
         @user.valid?
-        expect(@user.errors.full_messages).to include("First name reading is invalid. Input full-width katakana characters.")
+        expect(@user.errors.full_messages).to include('First name reading is invalid. Input full-width katakana characters.')
       end
       it 'last_name_readingが全角カタカナでないと登録できない' do
-        @user.last_name_reading = "ﾀﾛｳ"
+        @user.last_name_reading = 'ﾀﾛｳ'
         @user.valid?
-        expect(@user.errors.full_messages).to include("Last name reading is invalid. Input full-width katakana characters.")
+        expect(@user.errors.full_messages).to include('Last name reading is invalid. Input full-width katakana characters.')
       end
       it 'passwordが半角英語のみだと登録できない' do
-        @user.password = "abcdef"
-        @user.password_confirmation = "abcdef"
+        @user.password = 'abcdef'
+        @user.password_confirmation = 'abcdef'
         @user.valid?
-        expect(@user.errors.full_messages).to include("Password is invalid", "Password confirmation is invalid")
+        expect(@user.errors.full_messages).to include('Password is invalid', 'Password confirmation is invalid')
       end
       it 'passwordが半角数字のみだと登録できない' do
-        @user.password = "123456"
-        @user.password_confirmation = "123456"
+        @user.password = '123456'
+        @user.password_confirmation = '123456'
         @user.valid?
-        expect(@user.errors.full_messages).to include("Password is invalid", "Password confirmation is invalid")
+        expect(@user.errors.full_messages).to include('Password is invalid', 'Password confirmation is invalid')
       end
       it 'passwordが全角では登録できないこと' do
-        @user.password = "パスワードパスワード"
-        @user.password_confirmation = "パスワードパスワード"
+        @user.password = 'パスワードパスワード'
+        @user.password_confirmation = 'パスワードパスワード'
         @user.valid?
-        expect(@user.errors.full_messages).to include("Password is invalid", "Password confirmation is invalid")
+        expect(@user.errors.full_messages).to include('Password is invalid', 'Password confirmation is invalid')
       end
     end
   end
