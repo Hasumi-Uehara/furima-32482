@@ -1,6 +1,6 @@
 class UserOrder
   include ActiveModel::Model
-  attr_accessor :city, :addresses, :postal_code, :phone_number, :prefecture_id, :building
+  attr_accessor :postal_code, :prefecture_id, :city, :addresses, :building, :phone_number
 
   with_options presence: true do
     validates :city
@@ -11,4 +11,8 @@ class UserOrder
 
   validates :prefecture_id, numericality: {other_than: 1, message: "can't be blank"}
 
+  def save
+    order = Order.create(user_id: current_user.id, item_id: params[:id])
+    Address.create(postal_code: postal_code, prefecture_id: prefecture_id, city: city, addresses: addresses, building: building, phone_number: phone_number, order_id: order.id)
+  end
 end
