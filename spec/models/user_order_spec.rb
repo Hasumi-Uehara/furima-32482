@@ -2,7 +2,10 @@ require 'rails_helper'
 
 RSpec.describe UserOrder, type: :model do
   before do
-    @user_order = FactoryBot.build(:user_order)
+    @user = FactoryBot.create(:user)
+    @item = FactoryBot.create(:item)
+    @user_order = FactoryBot.build(:user_order, user_id: @user.id, item_id: @item.id)
+    sleep(1)
   end
 
   describe '商品購入' do
@@ -23,9 +26,9 @@ RSpec.describe UserOrder, type: :model do
         expect(@user_order.errors.full_messages).to include("Postal code can't be blank")
       end
       it '郵便番号にハイフンが無いと購入できない' do
-        @user_order.postal_code = "1234567"
+        @user_order.postal_code = '1234567'
         @user_order.valid?
-        expect(@user_order.errors.full_messages).to include("Postal code is invalid. Include hyphen(-)")
+        expect(@user_order.errors.full_messages).to include('Postal code is invalid. Include hyphen(-)')
       end
       it '都道府県が空だと購入できない' do
         @user_order.prefecture_id = 1
@@ -48,14 +51,14 @@ RSpec.describe UserOrder, type: :model do
         expect(@user_order.errors.full_messages).to include("Phone number can't be blank")
       end
       it '電話番号にハイフンがあると購入できない' do
-        @user_order.phone_number = "090-1234-5678"
+        @user_order.phone_number = '090-1234-5678'
         @user_order.valid?
-        expect(@user_order.errors.full_messages).to include("Phone number is invalid")
+        expect(@user_order.errors.full_messages).to include('Phone number is invalid')
       end
       it '電話番号が12桁以上の場合購入できない' do
-        @user_order.phone_number = "0120117117117"
+        @user_order.phone_number = '0120117117117'
         @user_order.valid?
-        expect(@user_order.errors.full_messages).to include("Phone number is invalid")
+        expect(@user_order.errors.full_messages).to include('Phone number is invalid')
       end
       it 'tokenが空では購入できない' do
         @user_order.token = nil
