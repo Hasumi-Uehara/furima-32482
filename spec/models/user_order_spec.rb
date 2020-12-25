@@ -52,6 +52,11 @@ RSpec.describe UserOrder, type: :model do
         @user_order.valid?
         expect(@user_order.errors.full_messages).to include("Phone number is invalid")
       end
+      it '電話番号が12桁以上の場合購入できない' do
+        @user_order.phone_number = "0120117117117"
+        @user_order.valid?
+        expect(@user_order.errors.full_messages).to include("Phone number is invalid")
+      end
       it "tokenが空では登録できないこと" do
         @user_order.token = nil
         @user_order.valid?
