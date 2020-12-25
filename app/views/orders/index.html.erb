@@ -14,7 +14,7 @@
         </h2>
         <div class='buy-item-price'>
           <p class='item-price-text'>¥<%= @item.price %></p>
-          <p class='item-price-sub-text'><%= ShoppingFeeStatus.find(@item.shopping_fee_status_id).name %></p>
+          <p class='item-price-sub-text'><%= @item.shopping_fee_status.name %></p>
         </div>
       </div>
     </div>
