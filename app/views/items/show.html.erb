@@ -8,30 +8,28 @@
     </h2>
     <div class='item-img-content'>
       <%= image_tag @item.image ,class:"item-box-img" %>
-      <%# 商品が売れている場合は、sold outを表示しましょう %>
+      <% if @item.order.present? %>
       <div class='sold-out'>
         <span>Sold Out!!</span>
       </div>
-      <%# //商品が売れている場合は、sold outを表示しましょう %>
+      <% end %>
     </div>
     <div class="item-price-box">
       <span class="item-price">
         <%= @item.price %>
       </span>
       <span class="item-postage">
-        <%= ShoppingFeeStatus.find(@item.shopping_fee_status_id).name %>
+        <%= @item.shopping_fee_status.name %>
       </span>
     </div>
 
-    <% if user_signed_in? %>
+    <% if user_signed_in? && @item.order.blank? %>
       <% if current_user.id == @item.user_id %>
         <%= link_to '商品の編集', edit_item_path(@item), method: :get, class: "item-red-btn" %>
         <p class='or-text'>or</p>
-        <%= link_to '削除', "/items/#{@item.id}", method: :delete, class:'item-destroy' %>
-      <% elsif Item.find(@item.id) %>
-        <%# 商品が売れていない場合はこちらを表示しましょう %>
-        <%= link_to '購入画面に進む', "#" ,class:"item-red-btn"%>
-        <%# //商品が売れていない場合はこちらを表示しましょう %>
+        <%= link_to '削除', item_path(@item), method: :delete, class:'item-destroy' %>
+      <% else %>
+        <%= link_to '購入画面に進む', item_orders_path(@item), class:"item-red-btn"%>
       <% end %>
     <% end %>
 
@@ -42,27 +40,27 @@
       <tbody>
         <tr>
           <th class="detail-item">出品者</th>
-          <td class="detail-value"><%= User.find(@item.user_id).nickname %></td>
+          <td class="detail-value"><%= @item.user.nickname %></td>
         </tr>
         <tr>
           <th class="detail-item">カテゴリー</th>
-          <td class="detail-value"><%= Category.find(@item.category_id).name %></td>
+          <td class="detail-value"><%= @item.category.name %></td>
         </tr>
         <tr>
           <th class="detail-item">商品の状態</th>
-          <td class="detail-value"><%= SalesStatus.find(@item.sales_status_id).name %></td>
+          <td class="detail-value"><%= @item.sales_status.name %></td>
         </tr>
         <tr>
           <th class="detail-item">配送料の負担</th>
-          <td class="detail-value"><%= ShoppingFeeStatus.find(@item.shopping_fee_status_id).name %></td>
+          <td class="detail-value"><%= @item.shopping_fee_status.name %></td>
         </tr>
         <tr>
           <th class="detail-item">発送元の地域</th>
-          <td class="detail-value"><%= Prefecture.find(@item.prefecture_id).name %></td>
+          <td class="detail-value"><%= @item.prefecture.name %></td>
         </tr>
         <tr>
           <th class="detail-item">発送日の目安</th>
-          <td class="detail-value"><%= ScheduledDelivery.find(@item.scheduled_delivery_id).name %></td>
+          <td class="detail-value"><%= @item.scheduled_delivery.name %></td>
         </tr>
       </tbody>
     </table>
@@ -102,7 +100,7 @@
     </a>
   </div>
   <%# 詳細ページで表示されている商品のカテゴリー名を表示しましょう %>
-  <a href=“#” class=‘another-item’><%= Category.find(@item.category_id).name %>をもっと見る</a>
+  <a href=“#” class=‘another-item’><%= @item.category.name %>をもっと見る</a>
   <%# //詳細ページで表示されている商品のカテゴリー名を表示しましょう %>
 </div>
 
